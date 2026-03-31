@@ -1,11 +1,11 @@
 ﻿{
-  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.25/MicrosoftTeams.schema.json",
-  "manifestVersion": "1.25",
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.13/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.13",
   "version": "1.0.0",
   "id": "a87ae817-082c-4707-9783-5fbf5b0f541f",
   "packageName": "com.m365.outlook.sidebar.a87ae817",
   "developer": {
-    "name": "ITOCHU Techno-Solutions Corporation",
+    "name": "z2250389",
     "websiteUrl": "https://github.com/z2250389/Outlook-M365App-Sample",
     "privacyUrl": "https://github.com/z2250389/Outlook-M365App-Sample",
     "termsOfUseUrl": "https://github.com/z2250389/Outlook-M365App-Sample"
@@ -20,8 +20,7 @@
   },
   "icons": {
     "outline": "outline.png",
-    "color": "color.png",
-    "color32x32": "color32x32.png"
+    "color": "color.png"
   },
   "accentColor": "#2563EB",
   "staticTabs": [
@@ -32,9 +31,6 @@
       "websiteUrl": "https://www.ctc-g.co.jp/",
       "scopes": [
         "personal"
-      ],
-      "context": [
-        "personalTab"
       ]
     }
   ],

@@ -1,6 +1,6 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.25/MicrosoftTeams.schema.json",
-  "manifestVersion": "1.25",
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.13/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.13",
   "version": "__APP_VERSION__",
   "id": "__APP_ID__",
   "packageName": "__PACKAGE_NAME__",
@@ -20,8 +20,7 @@
   },
   "icons": {
     "outline": "outline.png",
-    "color": "color.png",
-    "color32x32": "color32x32.png"
+    "color": "color.png"
   },
   "accentColor": "__ACCENT_COLOR__",
   "staticTabs": [
@@ -32,9 +31,6 @@
       "websiteUrl": "__WEBSITE_URL__",
       "scopes": [
         "personal"
-      ],
-      "context": [
-        "personalTab"
       ]
     }
   ],
