@@ -27,15 +27,16 @@
     {
       "entityId": "tab-a87ae817",
       "name": "サイドバーランチャー",
-      "contentUrl": "https://www.ctc-g.co.jp/",
-      "websiteUrl": "https://www.ctc-g.co.jp/",
+      "contentUrl": "https://z2250389.github.io/Outlook-M365App-Sample/index.html?targetUrl=https%3A%2F%2Foutlook.office.com%2Fmail%2F&dialogTitle=%E3%82%B5%E3%82%A4%E3%83%89%E3%83%90%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%81%E3%83%A3%E3%83%BC&autoOpenOnLoad=true",
+      "websiteUrl": "https://outlook.office.com/mail/",
       "scopes": [
         "personal"
       ]
     }
   ],
   "validDomains": [
-    "www.ctc-g.co.jp"
+    "z2250389.github.io",
+    "outlook.office.com"
   ]
 }
 

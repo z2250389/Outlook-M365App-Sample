@@ -35,6 +35,7 @@
     }
   ],
   "validDomains": [
+    "__APP_DOMAIN__",
     "__TARGET_DOMAIN__"
   ]
 }

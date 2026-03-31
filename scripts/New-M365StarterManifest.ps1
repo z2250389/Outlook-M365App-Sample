@@ -91,7 +91,7 @@ function Get-GitHubRepositoryInfo {
     Repository = $repo
     Branch = $branchName.Trim()
     RepositoryUrl = "https://github.com/$owner/$repo"
-    ContentBaseUrl = "https://cdn.jsdelivr.net/gh/$owner/$repo@$($branchName.Trim())/web"
+    PagesBaseUrl = "https://$owner.github.io/$repo"
   }
 }
 
@@ -275,10 +275,10 @@ if ([string]::IsNullOrWhiteSpace($AppId)) {
   $AppId = "a87ae817-082c-4707-9783-5fbf5b0f541f"
 }
 if ([string]::IsNullOrWhiteSpace($AppBaseUrl) -and $repoInfo) {
-  $AppBaseUrl = $repoInfo.ContentBaseUrl
+  $AppBaseUrl = $repoInfo.PagesBaseUrl
 }
 if ([string]::IsNullOrWhiteSpace($TargetUrl)) {
-  $TargetUrl = "https://www.ctc-g.co.jp/"
+  $TargetUrl = "https://outlook.office.com/mail/"
 }
 if ([string]::IsNullOrWhiteSpace($AppName)) {
   $AppName = Get-DefaultAppName
@@ -303,6 +303,7 @@ if ([string]::IsNullOrWhiteSpace($DeveloperTermsUrl) -and $repoInfo) {
 }
 
 $appIdValue = Get-GuidValue -Value $AppId -Name "APP_ID"
+$appBaseUri = Get-UriValue -Value $AppBaseUrl -Name "APP_BASE_URL"
 $targetUri = Get-UriValue -Value $TargetUrl -Name "TARGET_URL"
 $appNameValue = Get-RequiredValue -Value $AppName -Name "APP_NAME"
 $appVersionValue = if ([string]::IsNullOrWhiteSpace($AppVersion)) { "1.0.1" } else { $AppVersion.Trim() }
@@ -318,7 +319,12 @@ $developerNameValue = Get-RequiredValue -Value $DeveloperName -Name "DEVELOPER_N
 $developerWebsiteUri = Get-UriValue -Value $DeveloperWebsiteUrl -Name "DEVELOPER_WEBSITE_URL"
 $developerPrivacyUri = Get-UriValue -Value $DeveloperPrivacyUrl -Name "DEVELOPER_PRIVACY_URL"
 $developerTermsUri = Get-UriValue -Value $DeveloperTermsUrl -Name "DEVELOPER_TERMS_URL"
-$contentUrl = $targetUri.AbsoluteUri
+$landingUrl = Join-AppUrl -BaseUri $appBaseUri -RelativePath "index.html"
+$contentUrl = "{0}?targetUrl={1}&dialogTitle={2}&autoOpenOnLoad={3}" -f `
+  $landingUrl, `
+  [Uri]::EscapeDataString($targetUri.AbsoluteUri), `
+  [Uri]::EscapeDataString($dialogTitleValue), `
+  [Uri]::EscapeDataString($autoOpenOnLoadValue)
 
 $template = Get-Content -LiteralPath $TemplatePath -Raw -Encoding UTF8
 $values = @{
@@ -335,7 +341,7 @@ $values = @{
   ENTITY_ID = $entityIdValue
   CONTENT_URL = $contentUrl
   WEBSITE_URL = $targetUri.AbsoluteUri
-  APP_DOMAIN = $targetUri.Host
+  APP_DOMAIN = $appBaseUri.Host
   TARGET_DOMAIN = $targetUri.Host
 }
 

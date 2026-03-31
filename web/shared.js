@@ -1,7 +1,6 @@
 (function () {
-  const DEFAULT_TARGET_URL = "https://www.ctc-g.co.jp/";
+  const DEFAULT_TARGET_URL = "https://outlook.office.com/mail/";
   const DEFAULT_DIALOG_TITLE = "\u30B5\u30A4\u30C9\u30D0\u30FC\u30E9\u30F3\u30C1\u30E3\u30FC";
-  const DEFAULT_DIALOG_SIZE = "large";
 
   function getParam(name) {
     const value = new URLSearchParams(window.location.search).get(name);
@@ -45,14 +44,6 @@
     return fallback || DEFAULT_TARGET_URL;
   }
 
-  function parseDialogSize(value, fallback) {
-    const candidate = (value || fallback || "large").trim().toLowerCase();
-    if (["small", "medium", "large"].includes(candidate)) {
-      return candidate;
-    }
-    return fallback || "large";
-  }
-
   function readConfig() {
     const targetUrl = sanitizeUrl(
       getFirstParam(["TARGET_URL", "targetUrl", "target"]),
@@ -64,10 +55,6 @@
       getFirstParam(["AUTO_OPEN_ON_LOAD", "autoOpenOnLoad"]),
       true
     );
-    const dialogSize = parseDialogSize(
-      getFirstParam(["DIALOG_SIZE", "dialogSize", "size", "DIALOG_WIDTH", "dialogWidth", "width"]),
-      DEFAULT_DIALOG_SIZE
-    );
     const fallbackUrl = sanitizeUrl(
       getFirstParam(["FALLBACK_URL", "fallbackUrl"]),
       targetUrl
@@ -77,18 +64,8 @@
       targetUrl,
       dialogTitle,
       autoOpenOnLoad,
-      dialogSize,
       fallbackUrl,
     };
-  }
-
-  function buildDialogUrl(config) {
-    const dialogUrl = new URL("dialog.html", window.location.href);
-    dialogUrl.searchParams.set("TARGET_URL", config.targetUrl);
-    dialogUrl.searchParams.set("DIALOG_TITLE", config.dialogTitle);
-    dialogUrl.searchParams.set("FALLBACK_URL", config.fallbackUrl);
-    dialogUrl.searchParams.set("DIALOG_SIZE", config.dialogSize);
-    return dialogUrl.href;
   }
 
   function setText(id, value) {
@@ -110,7 +87,7 @@
     setText(`${prefix}-title`, config.dialogTitle);
     setText(`${prefix}-target`, config.targetUrl);
     setText(`${prefix}-mode`, config.autoOpenOnLoad ? "auto" : "manual");
-    setText(`${prefix}-size`, config.dialogSize);
+    setText(`${prefix}-host`, window.location.host);
     setLink(`${prefix}-link`, config.targetUrl);
   }
 
@@ -118,19 +95,30 @@
     setText(`${prefix}-status`, message);
   }
 
-  function supportsDialogUrl() {
-    const teams = window.microsoftTeams;
-    return Boolean(
-      teams &&
-        teams.dialog &&
-        teams.dialog.url &&
-        typeof teams.dialog.url.isSupported === "function" &&
-        teams.dialog.url.isSupported()
-    );
-  }
-
   function openTargetUrl(targetUrl) {
     window.location.replace(targetUrl);
+  }
+
+  async function openExternalTarget(targetUrl) {
+    const teams = window.microsoftTeams;
+
+    if (
+      teams &&
+      teams.secondaryBrowser &&
+      typeof teams.secondaryBrowser.isSupported === "function" &&
+      teams.secondaryBrowser.isSupported() &&
+      typeof teams.secondaryBrowser.open === "function"
+    ) {
+      try {
+        await teams.secondaryBrowser.open(new URL(targetUrl));
+        return true;
+      } catch (error) {
+        // Fall back to window.open below.
+      }
+    }
+
+    const popup = window.open(targetUrl, "_blank", "noopener,noreferrer");
+    return Boolean(popup);
   }
 
   async function initializeTeams() {
@@ -142,11 +130,10 @@
 
   window.AppShell = {
     readConfig,
-    buildDialogUrl,
     renderConfig,
     writeStatus,
-    supportsDialogUrl,
     openTargetUrl,
+    openExternalTarget,
     initializeTeams,
   };
 })();
