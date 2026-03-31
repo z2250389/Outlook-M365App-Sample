@@ -1,11 +1,10 @@
 window.addEventListener("DOMContentLoaded", async () => {
   const config = window.AppShell.readConfig();
-  const dialogUrl = window.AppShell.buildDialogUrl(config);
   const fallbackPanel = document.getElementById("fallback-panel");
   const openButton = document.getElementById("open-button");
 
   window.AppShell.renderConfig("tab", config);
-  window.AppShell.writeStatus("tab", "起動しています");
+  window.AppShell.writeStatus("tab", "開いています");
 
   function showFallback(message) {
     document.body.dataset.state = "fallback";
@@ -19,45 +18,19 @@ window.addEventListener("DOMContentLoaded", async () => {
     // Continue with best effort launch.
   }
 
-  async function openExternal() {
+  async function launchTarget() {
     const opened = await window.AppShell.openExternalTarget(config.targetUrl);
     if (opened) {
       document.body.dataset.state = "launched";
       return true;
     }
 
-    showFallback("ポップアップがブロックされました");
+    showFallback("起動できませんでした");
     return false;
   }
 
-  async function openDialog() {
-    if (!window.AppShell.supportsDialogUrl()) {
-      return openExternal();
-    }
-
-    return new Promise((resolve) => {
-      microsoftTeams.dialog.url.open(
-        {
-          url: dialogUrl,
-          title: config.dialogTitle,
-          size: config.dialogSize,
-          fallbackUrl: config.fallbackUrl,
-        },
-        (result) => {
-          if (result && result.err) {
-            openExternal().then(resolve);
-            return;
-          }
-
-          document.body.dataset.state = "launched";
-          resolve(true);
-        }
-      );
-    });
-  }
-
   openButton.addEventListener("click", async () => {
-    const opened = await openDialog();
+    const opened = await launchTarget();
     if (!opened) {
       showFallback("手動で開いてください");
     }
@@ -65,7 +38,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   try {
     if (config.autoOpenOnLoad) {
-      const opened = await openDialog();
+      const opened = await launchTarget();
       if (!opened) {
         showFallback("手動で開いてください");
       }

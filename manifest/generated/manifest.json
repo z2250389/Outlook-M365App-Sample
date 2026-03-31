@@ -1,7 +1,7 @@
 ﻿{
   "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.13/MicrosoftTeams.schema.json",
   "manifestVersion": "1.13",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "id": "84f4caa3-8123-468c-92e2-5e2a2f39d5e0",
   "packageName": "com.m365.outlook.sidebar.84f4caa3",
   "developer": {

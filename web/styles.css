@@ -146,6 +146,7 @@ button {
 .launcher-shell,
 .dialog-redirect-shell {
   padding: 0;
+  background: #ffffff;
 }
 
 .launcher-panel,
@@ -167,6 +168,10 @@ button {
 
 body[data-state="launched"] .launcher-panel {
   display: none;
+}
+
+body[data-state="launched"] {
+  background: #ffffff;
 }
 
 @media (max-width: 640px) {

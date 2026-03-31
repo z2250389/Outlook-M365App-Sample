@@ -1,7 +1,6 @@
 (function () {
   const DEFAULT_TARGET_URL = "https://outlook.office.com/mail/";
   const DEFAULT_DIALOG_TITLE = "\u30B5\u30A4\u30C9\u30D0\u30FC\u30E9\u30F3\u30C1\u30E3\u30FC";
-  const DEFAULT_DIALOG_SIZE = "large";
 
   function getParam(name) {
     const value = new URLSearchParams(window.location.search).get(name);
@@ -56,8 +55,6 @@
       getFirstParam(["AUTO_OPEN_ON_LOAD", "autoOpenOnLoad"]),
       true
     );
-    const dialogSize =
-      getFirstParam(["DIALOG_SIZE", "dialogSize", "size"]).toLowerCase() || DEFAULT_DIALOG_SIZE;
     const fallbackUrl = sanitizeUrl(
       getFirstParam(["FALLBACK_URL", "fallbackUrl"]),
       targetUrl
@@ -67,17 +64,8 @@
       targetUrl,
       dialogTitle,
       autoOpenOnLoad,
-      dialogSize,
       fallbackUrl,
     };
-  }
-
-  function buildDialogUrl(config) {
-    const dialogUrl = new URL("dialog.html", window.location.href);
-    dialogUrl.searchParams.set("TARGET_URL", config.targetUrl);
-    dialogUrl.searchParams.set("DIALOG_TITLE", config.dialogTitle);
-    dialogUrl.searchParams.set("FALLBACK_URL", config.fallbackUrl);
-    return dialogUrl.href;
   }
 
   function setText(id, value) {
@@ -97,25 +85,11 @@
 
   function renderConfig(prefix, config) {
     setText(`${prefix}-title`, config.dialogTitle);
-    setText(`${prefix}-target`, config.targetUrl);
-    setText(`${prefix}-mode`, config.autoOpenOnLoad ? "auto" : "manual");
-    setText(`${prefix}-host`, window.location.host);
     setLink(`${prefix}-link`, config.targetUrl);
   }
 
   function writeStatus(prefix, message) {
     setText(`${prefix}-status`, message);
-  }
-
-  function supportsDialogUrl() {
-    const teams = window.microsoftTeams;
-    return Boolean(
-      teams &&
-        teams.dialog &&
-        teams.dialog.url &&
-        typeof teams.dialog.url.isSupported === "function" &&
-        teams.dialog.url.isSupported()
-    );
   }
 
   function openTargetUrl(targetUrl) {
@@ -124,6 +98,15 @@
 
   async function openExternalTarget(targetUrl) {
     const teams = window.microsoftTeams;
+
+    if (teams && teams.app && typeof teams.app.openLink === "function") {
+      try {
+        await teams.app.openLink(targetUrl);
+        return true;
+      } catch (error) {
+        // Fall back to other methods below.
+      }
+    }
 
     if (
       teams &&
@@ -153,10 +136,8 @@
 
   window.AppShell = {
     readConfig,
-    buildDialogUrl,
     renderConfig,
     writeStatus,
-    supportsDialogUrl,
     openTargetUrl,
     openExternalTarget,
     initializeTeams,
