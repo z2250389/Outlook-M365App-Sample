@@ -272,7 +272,7 @@ function Join-AppUrl {
 
 $repoInfo = Get-GitHubRepositoryInfo
 if ([string]::IsNullOrWhiteSpace($AppId)) {
-  $AppId = "a87ae817-082c-4707-9783-5fbf5b0f541f"
+  $AppId = "84f4caa3-8123-468c-92e2-5e2a2f39d5e0"
 }
 if ([string]::IsNullOrWhiteSpace($AppBaseUrl) -and $repoInfo) {
   $AppBaseUrl = $repoInfo.HostedBaseUrl
@@ -306,7 +306,7 @@ $appIdValue = Get-GuidValue -Value $AppId -Name "APP_ID"
 $appBaseUri = Get-UriValue -Value $AppBaseUrl -Name "APP_BASE_URL"
 $targetUri = Get-UriValue -Value $TargetUrl -Name "TARGET_URL"
 $appNameValue = Get-RequiredValue -Value $AppName -Name "APP_NAME"
-$appVersionValue = if ([string]::IsNullOrWhiteSpace($AppVersion)) { "1.0.1" } else { $AppVersion.Trim() }
+$appVersionValue = if ([string]::IsNullOrWhiteSpace($AppVersion)) { "1.0.2" } else { $AppVersion.Trim() }
 $appDescriptionValue = if ([string]::IsNullOrWhiteSpace($AppDescription)) { $appNameValue } else { $AppDescription.Trim() }
 $dialogTitleValue = if ([string]::IsNullOrWhiteSpace($DialogTitle)) { $appNameValue } else { $DialogTitle.Trim() }
 $dialogSizeValue = Get-DialogSizeValue -Value $DialogSize

@@ -10,31 +10,15 @@
   <script src="index.js" defer></script>
 </head>
 <body>
-  <main class="shell">
-    <section class="card">
+  <main class="launcher-shell">
+    <section id="fallback-panel" class="launcher-panel" hidden>
       <p class="eyebrow">Outlook / Microsoft 365</p>
       <h1>サイドバーランチャー</h1>
-      <p id="tab-status" class="status">起動中</p>
-      <dl class="meta">
-        <div>
-          <dt>Title</dt>
-          <dd id="tab-title">-</dd>
-        </div>
-        <div>
-          <dt>Target</dt>
-          <dd><a id="tab-link" href="#" target="_blank" rel="noreferrer">-</a></dd>
-        </div>
-        <div>
-          <dt>Mode</dt>
-          <dd id="tab-mode">-</dd>
-        </div>
-        <div>
-          <dt>Host</dt>
-          <dd id="tab-host">-</dd>
-        </div>
-      </dl>
-      <div id="manual-row" hidden>
-        <button id="open-button" type="button">Open Outlook on the web</button>
+      <p id="tab-status" class="status">起動しています</p>
+      <p class="hint">自動で開けない場合のみ、下のボタンを使ってください。</p>
+      <p class="link-row"><a id="tab-link" href="#" target="_blank" rel="noreferrer">-</a></p>
+      <div>
+        <button id="open-button" type="button">開く</button>
       </div>
     </section>
   </main>

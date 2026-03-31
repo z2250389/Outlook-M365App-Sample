@@ -1,18 +1,24 @@
 window.addEventListener("DOMContentLoaded", async () => {
   const config = window.AppShell.readConfig();
-  const frame = document.getElementById("target-frame");
+  const openButton = document.getElementById("dialog-open-button");
   const fallback = document.getElementById("fallback-link");
 
   window.AppShell.renderConfig("dialog", config);
-  window.AppShell.writeStatus("dialog", "Loading target");
+  window.AppShell.writeStatus("dialog", "開いています");
 
   try {
     await window.AppShell.initializeTeams();
   } catch (error) {
-    // Dialog content can still load outside Teams initialization.
+    // Continue with best effort launch.
   }
 
-  frame.src = config.targetUrl;
   fallback.href = config.fallbackUrl;
   fallback.textContent = config.fallbackUrl;
+  openButton.addEventListener("click", () => {
+    window.location.assign(config.targetUrl);
+  });
+
+  window.setTimeout(() => {
+    window.location.replace(config.targetUrl);
+  }, 80);
 });

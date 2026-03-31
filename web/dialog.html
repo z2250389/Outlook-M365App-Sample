@@ -3,33 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sidebar Launcher</title>
+  <title>サイドバーランチャー</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://res.cdn.office.net/teams-js/2.34.0/js/MicrosoftTeams.min.js" crossorigin="anonymous"></script>
   <script src="shared.js" defer></script>
   <script src="dialog.js" defer></script>
 </head>
 <body>
-  <main class="dialog-shell">
-    <header class="dialog-header">
+  <main class="dialog-redirect-shell">
+    <section class="dialog-redirect-panel">
+      <p class="eyebrow">Outlook / Microsoft 365</p>
+      <h1 id="dialog-title">サイドバーランチャー</h1>
+      <p id="dialog-status" class="status">開いています</p>
       <div>
-        <p class="eyebrow">Dialog</p>
-        <h1 id="dialog-title">Web view</h1>
+        <button id="dialog-open-button" type="button">開く</button>
       </div>
-      <p id="dialog-status" class="status">Loading</p>
-    </header>
-    <section class="dialog-body">
-      <iframe
-        id="target-frame"
-        class="target-frame"
-        title="Target web view"
-        loading="eager"
-      ></iframe>
-      <p class="fallback">
-        If the target does not render here,
-        <a id="fallback-link" href="#" target="_blank" rel="noreferrer">target</a>
-        can be opened in the browser.
-      </p>
+      <p class="link-row"><a id="fallback-link" href="#" target="_blank" rel="noreferrer">-</a></p>
     </section>
   </main>
 </body>

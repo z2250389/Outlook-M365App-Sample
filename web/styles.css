@@ -34,7 +34,9 @@ a {
 }
 
 .shell,
-.dialog-shell {
+.dialog-shell,
+.launcher-shell,
+.dialog-redirect-shell {
   min-height: 100vh;
   display: grid;
   place-items: center;
@@ -139,6 +141,32 @@ button {
 .fallback {
   margin: 12px 0 0;
   color: var(--muted);
+}
+
+.launcher-shell,
+.dialog-redirect-shell {
+  padding: 0;
+}
+
+.launcher-panel,
+.dialog-redirect-panel {
+  width: min(100%, 360px);
+  padding: 20px 22px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.hint,
+.link-row {
+  margin: 0 0 14px;
+  color: var(--muted);
+  word-break: break-word;
+}
+
+body[data-state="launched"] .launcher-panel {
+  display: none;
 }
 
 @media (max-width: 640px) {
