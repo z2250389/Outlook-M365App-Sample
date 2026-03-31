@@ -91,7 +91,7 @@ function Get-GitHubRepositoryInfo {
     Repository = $repo
     Branch = $branchName.Trim()
     RepositoryUrl = "https://github.com/$owner/$repo"
-    PagesBaseUrl = "https://$owner.github.io/$repo"
+    HostedBaseUrl = "https://raw.githack.com/$owner/$repo/$($branchName.Trim())/web"
   }
 }
 
@@ -275,7 +275,7 @@ if ([string]::IsNullOrWhiteSpace($AppId)) {
   $AppId = "a87ae817-082c-4707-9783-5fbf5b0f541f"
 }
 if ([string]::IsNullOrWhiteSpace($AppBaseUrl) -and $repoInfo) {
-  $AppBaseUrl = $repoInfo.PagesBaseUrl
+  $AppBaseUrl = $repoInfo.HostedBaseUrl
 }
 if ([string]::IsNullOrWhiteSpace($TargetUrl)) {
   $TargetUrl = "https://outlook.office.com/mail/"
