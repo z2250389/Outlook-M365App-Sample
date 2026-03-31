@@ -305,7 +305,7 @@ if ([string]::IsNullOrWhiteSpace($DeveloperTermsUrl) -and $repoInfo) {
 $appIdValue = Get-GuidValue -Value $AppId -Name "APP_ID"
 $targetUri = Get-UriValue -Value $TargetUrl -Name "TARGET_URL"
 $appNameValue = Get-RequiredValue -Value $AppName -Name "APP_NAME"
-$appVersionValue = if ([string]::IsNullOrWhiteSpace($AppVersion)) { "1.0.0" } else { $AppVersion.Trim() }
+$appVersionValue = if ([string]::IsNullOrWhiteSpace($AppVersion)) { "1.0.1" } else { $AppVersion.Trim() }
 $appDescriptionValue = if ([string]::IsNullOrWhiteSpace($AppDescription)) { $appNameValue } else { $AppDescription.Trim() }
 $dialogTitleValue = if ([string]::IsNullOrWhiteSpace($DialogTitle)) { $appNameValue } else { $DialogTitle.Trim() }
 $dialogSizeValue = Get-DialogSizeValue -Value $DialogSize
