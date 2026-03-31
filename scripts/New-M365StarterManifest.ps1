@@ -287,10 +287,10 @@ if ([string]::IsNullOrWhiteSpace($AppDescription)) {
   $AppDescription = $AppName
 }
 if ([string]::IsNullOrWhiteSpace($DeveloperName) -and $repoInfo) {
-  $DeveloperName = $repoInfo.Owner
+  $DeveloperName = "ITOCHU Techno-Solutions Corporation"
 }
 if ([string]::IsNullOrWhiteSpace($DeveloperName)) {
-  $DeveloperName = "z2250389"
+  $DeveloperName = "ITOCHU Techno-Solutions Corporation"
 }
 if ([string]::IsNullOrWhiteSpace($DeveloperWebsiteUrl) -and $repoInfo) {
   $DeveloperWebsiteUrl = $repoInfo.RepositoryUrl
