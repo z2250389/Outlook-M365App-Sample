@@ -97,33 +97,11 @@
   }
 
   async function openExternalTarget(targetUrl) {
-    const teams = window.microsoftTeams;
-
-    if (teams && teams.app && typeof teams.app.openLink === "function") {
-      try {
-        await teams.app.openLink(targetUrl);
-        return true;
-      } catch (error) {
-        // Fall back to other methods below.
-      }
-    }
-
-    if (
-      teams &&
-      teams.secondaryBrowser &&
-      typeof teams.secondaryBrowser.isSupported === "function" &&
-      teams.secondaryBrowser.isSupported() &&
-      typeof teams.secondaryBrowser.open === "function"
-    ) {
-      try {
-        await teams.secondaryBrowser.open(new URL(targetUrl));
-        return true;
-      } catch (error) {
-        // Fall back to window.open below.
-      }
-    }
-
-    const popup = window.open(targetUrl, "_blank", "noopener,noreferrer");
+    const popup = window.open(
+      targetUrl,
+      "_blank",
+      "popup=yes,width=1280,height=900,left=80,top=80,noopener,noreferrer"
+    );
     return Boolean(popup);
   }
 
