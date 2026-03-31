@@ -1,0 +1,46 @@
+﻿{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.25/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.25",
+  "version": "1.0.0",
+  "id": "a87ae817-082c-4707-9783-5fbf5b0f541f",
+  "packageName": "com.m365.outlook.sidebar.a87ae817",
+  "developer": {
+    "name": "z2250389",
+    "websiteUrl": "https://github.com/z2250389/Outlook-M365App-Sample",
+    "privacyUrl": "https://github.com/z2250389/Outlook-M365App-Sample",
+    "termsOfUseUrl": "https://github.com/z2250389/Outlook-M365App-Sample"
+  },
+  "name": {
+    "short": "サイドバーランチャー",
+    "full": "サイドバーランチャー"
+  },
+  "description": {
+    "short": "サイドバーランチャー",
+    "full": "サイドバーランチャー"
+  },
+  "icons": {
+    "outline": "outline.png",
+    "color": "color.png",
+    "color32x32": "color32x32.png"
+  },
+  "accentColor": "#2563EB",
+  "staticTabs": [
+    {
+      "entityId": "tab-a87ae817",
+      "name": "サイドバーランチャー",
+      "contentUrl": "https://cdn.jsdelivr.net/gh/z2250389/Outlook-M365App-Sample@main/web/index.html?targetUrl=https%3A%2F%2Fwww.ctc-g.co.jp%2F&dialogTitle=%E3%82%B5%E3%82%A4%E3%83%89%E3%83%90%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%81%E3%83%A3%E3%83%BC&dialogSize=large&autoOpenOnLoad=true",
+      "websiteUrl": "https://www.ctc-g.co.jp/",
+      "scopes": [
+        "personal"
+      ],
+      "context": [
+        "personalTab"
+      ]
+    }
+  ],
+  "validDomains": [
+    "cdn.jsdelivr.net",
+    "www.ctc-g.co.jp"
+  ]
+}
+

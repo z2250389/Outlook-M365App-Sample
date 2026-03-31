@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Starter</title>
+  <script src="https://res.cdn.office.net/teams-js/2.2.0/js/MicrosoftTeams.min.js" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: linear-gradient(135deg, #dbeafe, #eff6ff 48%, #ffffff);
+      color: var(--text);
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    main {
+      width: min(100%, 520px);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 24px 80px rgba(15, 23, 42, 0.12);
+      padding: 28px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+
+    p {
+      margin: 0 0 14px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .status {
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #eff6ff;
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    a {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 id="title">Loading...</h1>
+    <p>アプリ起動中にダイアログを開きます。</p>
+    <div class="status" id="status">Initializing...</div>
+  </main>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const targetUrl = params.get("targetUrl") || "";
+    const dialogTitle = params.get("dialogTitle") || "Preview";
+    const status = document.getElementById("status");
+    const title = document.getElementById("title");
+
+    title.textContent = dialogTitle;
+
+    function showMessage(message, linkUrl) {
+      status.textContent = message;
+      if (!linkUrl) {
+        return;
+      }
+
+      const link = document.createElement("a");
+      link.href = linkUrl;
+      link.target = "_blank";
+      link.rel = "noreferrer";
+      link.textContent = "Open target URL";
+      status.append(" ");
+      status.appendChild(link);
+    }
+
+    async function openDialog() {
+      try {
+        await microsoftTeams.app.initialize();
+        if (!microsoftTeams.dialog || !microsoftTeams.dialog.url || !microsoftTeams.dialog.url.isSupported()) {
+          showMessage("Dialog not supported.", targetUrl);
+          return;
+        }
+
+        await microsoftTeams.dialog.url.open({
+          title: dialogTitle,
+          url: new URL("dialog.html", location.href).toString() + location.search,
+          size: {
+            width: 80,
+            height: 80
+          }
+        });
+        showMessage("Dialog opened.");
+      } catch (error) {
+        showMessage("Failed to open dialog.", targetUrl);
+      }
+    }
+
+    window.addEventListener("load", openDialog);
+  </script>
+</body>
+</html>

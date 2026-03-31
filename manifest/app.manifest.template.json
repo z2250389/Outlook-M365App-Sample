@@ -1,0 +1,45 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.25/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.25",
+  "version": "__APP_VERSION__",
+  "id": "__APP_ID__",
+  "packageName": "__PACKAGE_NAME__",
+  "developer": {
+    "name": "__DEVELOPER_NAME__",
+    "websiteUrl": "__DEVELOPER_WEBSITE_URL__",
+    "privacyUrl": "__DEVELOPER_PRIVACY_URL__",
+    "termsOfUseUrl": "__DEVELOPER_TERMS_URL__"
+  },
+  "name": {
+    "short": "__APP_NAME__",
+    "full": "__APP_NAME__"
+  },
+  "description": {
+    "short": "__APP_DESCRIPTION__",
+    "full": "__APP_DESCRIPTION__"
+  },
+  "icons": {
+    "outline": "outline.png",
+    "color": "color.png",
+    "color32x32": "color32x32.png"
+  },
+  "accentColor": "__ACCENT_COLOR__",
+  "staticTabs": [
+    {
+      "entityId": "__ENTITY_ID__",
+      "name": "__APP_NAME__",
+      "contentUrl": "__CONTENT_URL__",
+      "websiteUrl": "__WEBSITE_URL__",
+      "scopes": [
+        "personal"
+      ],
+      "context": [
+        "personalTab"
+      ]
+    }
+  ],
+  "validDomains": [
+    "__APP_DOMAIN__",
+    "__TARGET_DOMAIN__"
+  ]
+}
